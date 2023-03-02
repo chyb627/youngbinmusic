@@ -1,11 +1,12 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabsParamList } from '../types/types';
 import { TabIcon } from '../components/ui/TabIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LookAroundScreen from '../screens/LookAroundScreen';
 import StorageScreen from '../screens/StorageScreen';
 import { TypeIconName } from '../components/ui/Icons';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 
 const BottomTab = createBottomTabNavigator<BottomTabsParamList>();
 
@@ -36,3 +37,9 @@ const BottomTabScreen = () => {
 };
 
 export default BottomTabScreen;
+
+export const useBotomTabNavigation = <RouteName extends keyof BottomTabsParamList>() =>
+  useNavigation<BottomTabNavigationProp<BottomTabsParamList, RouteName>>();
+
+export const useBottomTabRoute = <RouteName extends keyof BottomTabsParamList>() =>
+  useRoute<RouteProp<BottomTabsParamList, RouteName>>();

@@ -1,8 +1,7 @@
+import { NavigatorScreenParams } from '@react-navigation/native';
+
 export type RootStackParamList = {
-  BottomTab: undefined;
-  // Detail: {
-  //   item: SearchRepoData;
-  // };
+  BottomTab: NavigatorScreenParams<BottomTabsParamList>;
 };
 
 export type BottomTabsParamList = {
