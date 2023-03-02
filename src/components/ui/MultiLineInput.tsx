@@ -10,9 +10,10 @@ export const MultiLineInput: React.FC<{
   height?: number;
 }> = (props) => {
   const [focused, setFocused] = useState(false);
+  const focusedStyles = focused ? otherFocusedStyles : styles;
 
   return (
-    <View style={[styles.container, { borderColor: focused ? 'black' : 'gray' }]}>
+    <View style={focusedStyles.container}>
       <TextInput
         autoCorrect={false}
         autoCapitalize="none"
@@ -36,5 +37,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 4,
     borderWidth: 1,
+    backgroundColor: 'gray',
   },
 });
+
+const otherFocusedStyles = {
+  container: [styles.container, { backgroundColor: 'black' }],
+};

@@ -10,7 +10,7 @@ export const DoubleTabButton: React.FC<{
     <TapGestureHandler
       numberOfTaps={2}
       onHandlerStateChange={({ nativeEvent }) => {
-        if (nativeEvent.state == State.ACTIVE) {
+        if (nativeEvent.state === State.ACTIVE) {
           props.onPressDoubleTab();
         }
       }}>
