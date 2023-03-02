@@ -1,4 +1,4 @@
-package com.youngbinmusic.newarchitecture.modules;
+package com.chabiri.youngbinmusic.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

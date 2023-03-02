@@ -1,4 +1,4 @@
-package com.youngbinmusic;
+package com.chabiri.youngbinmusic;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

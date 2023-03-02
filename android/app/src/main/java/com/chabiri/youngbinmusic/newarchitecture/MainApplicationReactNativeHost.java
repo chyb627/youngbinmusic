@@ -1,4 +1,4 @@
-package com.youngbinmusic.newarchitecture;
+package com.chabiri.youngbinmusic.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.youngbinmusic.BuildConfig;
-import com.youngbinmusic.newarchitecture.components.MainComponentsRegistry;
-import com.youngbinmusic.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.chabiri.youngbinmusic.BuildConfig;
+import com.chabiri.youngbinmusic.newarchitecture.components.MainComponentsRegistry;
+import com.chabiri.youngbinmusic.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

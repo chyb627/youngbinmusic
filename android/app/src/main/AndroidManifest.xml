@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.youngbinmusic">
+  package="com.chabiri.youngbinmusic">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
