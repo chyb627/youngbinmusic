@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
+import MusicListMedium from '../components/Home/MusicListMedium';
 import MusicListSmall from '../components/Home/MusicListSmall';
 import { Header } from '../components/ui/Header/Header';
 import { Icon } from '../components/ui/Icons';
@@ -51,6 +52,8 @@ const HomeScreen = () => {
 
       <ScrollView style={styles.musicListContainer}>
         <MusicListSmall />
+
+        <MusicListMedium />
       </ScrollView>
     </View>
   );
