@@ -3,7 +3,7 @@ import { Image as RNImage, StyleProp, ImageStyle } from 'react-native';
 
 export const RemoteImage: React.FC<{
   url: string;
-  width: number;
+  width?: number;
   height: number;
   style?: StyleProp<ImageStyle>;
 }> = (props) => (

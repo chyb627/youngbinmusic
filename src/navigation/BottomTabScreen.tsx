@@ -28,10 +28,12 @@ const BottomTabScreen = () => {
           const routeIconName = getIconName();
           return <TabIcon iconName={routeIconName} iconColor={color} />;
         },
+        tabBarStyle: { backgroundColor: '#000' },
+        tabBarActiveTintColor: 'yellow',
       })}>
-      <BottomTab.Screen name="Home" component={HomeScreen} />
-      <BottomTab.Screen name="LookAround" component={LookAroundScreen} />
-      <BottomTab.Screen name="Storage" component={StorageScreen} />
+      <BottomTab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} />
+      <BottomTab.Screen name="LookAround" component={LookAroundScreen} options={{ title: '둘러보기' }} />
+      <BottomTab.Screen name="Storage" component={StorageScreen} options={{ title: '보관함' }} />
     </BottomTab.Navigator>
   );
 };

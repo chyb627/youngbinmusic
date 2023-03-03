@@ -1,23 +1,88 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchRepo } from '../actions/user';
-import { AppDispatch, RootState } from '../store';
+import React, { useCallback, useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import CategoryList from '../components/Home/CategoryList';
+import HeaderBackground from '../components/Home/HeaderBackground';
+import MusicListSmall from '../components/Home/MusicListSmall';
+import { Header } from '../components/ui/Header/Header';
+import { Icon } from '../components/ui/Icons';
+
+const IconItem: React.FC<{ name: string }> = ({ name }) => {
+  return (
+    <TouchableOpacity>
+      <View style={styles.headerIcon}>
+        <Icon name={name} color="#fff" size={20} />
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const HomeScreen = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { searchRepoData } = useSelector((state: RootState) => state.user);
-  console.log(searchRepoData);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
 
-  useEffect(() => {
-    dispatch(searchRepo());
-  }, [dispatch]);
+  const onPressCategory = useCallback(
+    (index: number) => {
+      const data = selectedCategory === index ? null : index;
+      setSelectedCategory(data);
+    },
+    [selectedCategory],
+  );
 
   return (
-    <SafeAreaView>
-      <Text className="underline">Home</Text>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <HeaderBackground selectedCategory={selectedCategory} />
+
+      <Header>
+        <Image style={styles.headerImage} source={require('../assets/images/logo.png')} />
+        <View style={styles.headerIconContainer}>
+          <IconItem name="logo-rss" />
+          <IconItem name="search" />
+
+          <TouchableOpacity>
+            <View style={styles.headerIcon}>
+              <View style={styles.userIcon}>
+                <Icon name="person-outline" color="#fff" size={20} />
+              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </Header>
+
+      <CategoryList onPressCategory={onPressCategory} selectedCategory={selectedCategory} />
+
+      <ScrollView style={styles.musicListContainer}>
+        <MusicListSmall />
+      </ScrollView>
+    </View>
   );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#111',
+  },
+  headerImage: {
+    height: 30,
+    width: 90,
+  },
+  headerIconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerIcon: {
+    marginHorizontal: 8,
+  },
+  userIcon: {
+    height: 30,
+    width: 30,
+    backgroundColor: '#555',
+    borderRadius: 30 / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  musicListContainer: {},
+});
