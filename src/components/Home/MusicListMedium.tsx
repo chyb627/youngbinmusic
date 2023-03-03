@@ -11,7 +11,7 @@ const MusicListMediumItem = () => {
     <View>
       <RemoteImage url="https://picsum.photos/200" height={width / 4} width={width / 4} />
 
-      <View style={styles.iconContainer}>
+      <View style={styles.itemIconContainer}>
         <Icon name="play" size={28} color="#fff" />
       </View>
 
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   musicListItemContainer: {
     marginRight: 20,
   },
-  iconContainer: {
+  itemIconContainer: {
     width: width / 4,
     height: width / 4,
     justifyContent: 'center',

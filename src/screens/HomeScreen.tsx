@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
+import MusicListLarge from '../components/Home/MusicListLarge';
 import MusicListMedium from '../components/Home/MusicListMedium';
 import MusicListSmall from '../components/Home/MusicListSmall';
 import { Header } from '../components/ui/Header/Header';
@@ -50,10 +51,14 @@ const HomeScreen = () => {
 
       <CategoryList onPressCategory={onPressCategory} selectedCategory={selectedCategory} />
 
-      <ScrollView style={styles.musicListContainer}>
-        <MusicListSmall />
+      <ScrollView>
+        <View style={styles.musicListContainer}>
+          <MusicListSmall />
 
-        <MusicListMedium />
+          <MusicListMedium />
+
+          <MusicListLarge />
+        </View>
       </ScrollView>
     </View>
   );
@@ -87,5 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     overflow: 'hidden',
   },
-  musicListContainer: {},
+  musicListContainer: {
+    marginBottom: 100,
+  },
 });
