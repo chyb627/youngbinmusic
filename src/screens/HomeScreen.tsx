@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { View, ScrollView, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
@@ -7,6 +7,7 @@ import MusicListMedium from '../components/Home/MusicListMedium';
 import MusicListSmall from '../components/Home/MusicListSmall';
 import { Header } from '../components/ui/Header/Header';
 import { Icon } from '../components/ui/Icons';
+import useHome from '../hooks/useHome';
 
 const IconItem: React.FC<{ name: string }> = ({ name }) => {
   return (
@@ -20,6 +21,7 @@ const IconItem: React.FC<{ name: string }> = ({ name }) => {
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const { headerAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -33,25 +35,48 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <HeaderBackground selectedCategory={selectedCategory} />
 
-      <Header>
-        <Image style={styles.headerImage} source={require('../assets/images/logo.png')} />
-        <View style={styles.headerIconContainer}>
-          <IconItem name="logo-rss" />
-          <IconItem name="search" />
+      {/* 헤더 */}
+      <Animated.View
+        style={{
+          marginTop: headerAnimation.interpolate({
+            inputRange: [-40, 0, 40],
+            outputRange: [0, 0, -45],
+          }),
+          opacity: headerAnimation.interpolate({
+            inputRange: [-40, 0, 20],
+            outputRange: [1, 1, 0],
+          }),
+        }}>
+        <Header>
+          <Image style={styles.headerImage} source={require('../assets/images/logo.png')} />
+          <View style={styles.headerIconContainer}>
+            <IconItem name="logo-rss" />
+            <IconItem name="search" />
 
-          <TouchableOpacity>
-            <View style={styles.headerIcon}>
-              <View style={styles.userIcon}>
-                <Icon name="person-outline" color="#fff" size={20} />
+            <TouchableOpacity>
+              <View style={styles.headerIcon}>
+                <View style={styles.userIcon}>
+                  <Icon name="person-outline" color="#fff" size={20} />
+                </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </Header>
+            </TouchableOpacity>
+          </View>
+        </Header>
+      </Animated.View>
 
-      <CategoryList onPressCategory={onPressCategory} selectedCategory={selectedCategory} />
+      {/* 카테고리 리스트 */}
+      <CategoryList
+        onPressCategory={onPressCategory}
+        selectedCategory={selectedCategory}
+        headerAnimation={headerAnimation}
+      />
 
-      <ScrollView>
+      {/* 뮤직 리스트 */}
+      <ScrollView
+        scrollEventThrottle={1} // 스크롤 민감도, 얼마나 민감하게 스크롤을 캐치할 것인지 설정. (1~16)
+        onScroll={onScroll}
+        onScrollBeginDrag={onScrollBeginDrag}
+        onScrollEndDrag={onScrollEndDrag}>
         <View style={styles.musicListContainer}>
           <MusicListSmall />
 
