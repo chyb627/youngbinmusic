@@ -9,7 +9,11 @@ const { width } = Dimensions.get('window');
 const MusicListLargeItem = () => {
   return (
     <View>
-      <RemoteImage url="https://picsum.photos/200" height={width / 2.5} width={width / 2.5} />
+      <RemoteImage
+        url={`https://picsum.photos/20${Math.floor(Math.random() * 10)}`}
+        height={width / 2.5}
+        width={width / 2.5}
+      />
 
       <Text style={styles.itemText} numberOfLines={1}>
         {faker.music.songName()}

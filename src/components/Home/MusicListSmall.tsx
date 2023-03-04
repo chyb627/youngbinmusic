@@ -10,7 +10,7 @@ const MusicListSmallItem = () => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftItemContainer}>
-        <RemoteImage url="https://picsum.photos/50" height={50} width={50} />
+        <RemoteImage url={`https://picsum.photos/5${Math.floor(Math.random() * 10)}`} height={50} width={50} />
 
         <View style={styles.itemTextContainer}>
           <Text style={styles.itemTitleText} numberOfLines={1}>

@@ -9,7 +9,11 @@ const { width } = Dimensions.get('window');
 const MusicListMediumItem = () => {
   return (
     <View>
-      <RemoteImage url="https://picsum.photos/200" height={width / 4} width={width / 4} />
+      <RemoteImage
+        url={`https://picsum.photos/20${Math.floor(Math.random() * 10)}`}
+        height={width / 4}
+        width={width / 4}
+      />
 
       <View style={styles.itemIconContainer}>
         <Icon name="play" size={28} color="#fff" />

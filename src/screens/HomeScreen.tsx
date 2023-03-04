@@ -39,7 +39,7 @@ const HomeScreen = () => {
       <Animated.View
         style={{
           marginTop: headerAnimation.interpolate({
-            inputRange: [-40, 0, 40],
+            inputRange: [-40, 0, 100],
             outputRange: [0, 0, -45],
           }),
           opacity: headerAnimation.interpolate({
