@@ -1,11 +1,27 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { RemoteImage } from '../ui/RemoteImage';
 
-const HeaderBackground: React.FC<{ selectedCategory: number | null }> = ({ selectedCategory }) => {
+const HeaderBackground: React.FC<{
+  selectedCategory: number | null;
+  headerBackgroundAnimation: Animated.Value;
+}> = ({ selectedCategory, headerBackgroundAnimation }) => {
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          top: headerBackgroundAnimation.interpolate({
+            inputRange: [-1, 0, 100],
+            outputRange: [0, 0, -100],
+          }),
+          opacity: headerBackgroundAnimation.interpolate({
+            inputRange: [0, 100],
+            outputRange: [1, 0],
+          }),
+        },
+      ]}>
       {selectedCategory === null ? (
         <LinearGradient
           start={{ x: 0.7, y: 0.25 }}
@@ -26,7 +42,7 @@ const HeaderBackground: React.FC<{ selectedCategory: number | null }> = ({ selec
           />
         </>
       )}
-    </View>
+    </Animated.View>
   );
 };
 

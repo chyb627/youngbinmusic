@@ -5,6 +5,7 @@ const useHome = () => {
   const scrollStartRef = useRef(0);
   const showHeaderRef = useRef(true); // Header가 보이는지의 bool값
   const headerAnimation = useRef(new Animated.Value(0)).current;
+  const headerBackgroundAnimation = useRef(new Animated.Value(0)).current;
 
   const onScrollBeginDrag = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const y = e.nativeEvent.contentOffset.y;
@@ -51,9 +52,12 @@ const useHome = () => {
     if (dy > -40 && dy < 0 && !showHeaderRef.current) {
       headerAnimation.setValue(dy + 100);
     }
+
+    // 헤더 백그라운드 애니메이션
+    headerBackgroundAnimation.setValue(y);
   };
 
-  return { headerAnimation, onScrollBeginDrag, onScrollEndDrag, onScroll };
+  return { headerAnimation, headerBackgroundAnimation, onScrollBeginDrag, onScrollEndDrag, onScroll };
 };
 
 export default useHome;

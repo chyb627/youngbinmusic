@@ -21,7 +21,7 @@ const IconItem: React.FC<{ name: string }> = ({ name }) => {
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const { headerAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
+  const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -33,7 +33,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderBackground selectedCategory={selectedCategory} />
+      <HeaderBackground selectedCategory={selectedCategory} headerBackgroundAnimation={headerBackgroundAnimation} />
 
       {/* 헤더 */}
       <Animated.View
