@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Icon } from '../ui/Icons';
 import { RemoteImage } from '../ui/RemoteImage';
@@ -30,6 +30,10 @@ const MusicListSmallItem = () => {
 };
 
 const MusicListSmall = () => {
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollStartRef = useRef(0);
+  const pageRef = useRef(1);
+
   return (
     <View>
       {/* 타이틀 */}
@@ -38,7 +42,55 @@ const MusicListSmall = () => {
         <Text style={styles.titleTextBottom}>빠른 선곡</Text>
       </View>
 
-      <ScrollView horizontal contentContainerStyle={styles.contentContainerStyle}>
+      <ScrollView
+        horizontal
+        ref={scrollRef}
+        contentContainerStyle={styles.contentContainerStyle}
+        showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={1}
+        onScrollBeginDrag={(e) => {
+          const x = e.nativeEvent.contentOffset.x;
+          scrollStartRef.current = x;
+          // console.log(x);
+        }}
+        onScrollEndDrag={(e) => {
+          const x = e.nativeEvent.contentOffset.x;
+          const dx = x - scrollStartRef.current;
+          // console.log(dx);
+
+          // 오른쪽 페이지로 붙는 애니메이션
+          if (width / 4 < dx && pageRef.current !== 3) {
+            // console.log('다음 페이지로 넘어가게');
+            scrollRef.current?.scrollTo({
+              x: width * 0.9 * pageRef.current,
+              animated: true,
+            });
+            pageRef.current = pageRef.current + 1;
+          }
+          if (dx > 0 && dx < width / 4) {
+            // console.log('머물기');
+            scrollRef.current?.scrollTo({
+              x: width * 0.9 * (pageRef.current - 1),
+              animated: true,
+            });
+          }
+
+          // 왼쪽 페이지로 넘어가는 애니메이션
+          if (dx < -width / 4 && pageRef.current !== 1) {
+            scrollRef.current?.scrollTo({
+              x: width * 0.9 * (pageRef.current - 2),
+              animated: true,
+            });
+            pageRef.current = pageRef.current - 1;
+          }
+
+          if (-width / 4 < dx && dx < 0) {
+            scrollRef.current?.scrollTo({
+              x: width * 0.9 * (pageRef.current - 1),
+              animated: true,
+            });
+          }
+        }}>
         {[...Array(3)].map((val, idx) => {
           return (
             <View style={{ width: width * 0.9 }} key={`music-list-small-item-container-${idx}`}>
