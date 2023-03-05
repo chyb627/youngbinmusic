@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import PlayList from '../components/common/PlayList';
 import CategoryList from '../components/Home/CategoryList';
@@ -23,6 +23,7 @@ const IconItem: React.FC<{ name: string }> = ({ name }) => {
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
+  const playListAnimation = useRef(new Animated.Value(0)).current;
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -90,7 +91,7 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      <PlayList />
+      <PlayList playListAnimation={playListAnimation} />
     </View>
   );
 };

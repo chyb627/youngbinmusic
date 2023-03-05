@@ -3,10 +3,12 @@ import { Animated, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { RemoteImage } from '../ui/RemoteImage';
 
-const HeaderBackground: React.FC<{
+interface HeaderBackgroundProps {
   selectedCategory: number | null;
   headerBackgroundAnimation: Animated.Value;
-}> = ({ selectedCategory, headerBackgroundAnimation }) => {
+}
+
+const HeaderBackground: React.FC<HeaderBackgroundProps> = ({ selectedCategory, headerBackgroundAnimation }) => {
   return (
     <Animated.View
       style={[

@@ -1,11 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Animated, FlatList, SafeAreaView } from 'react-native';
 
-const CategoryList: React.FC<{
+interface CategoryListProps {
   onPressCategory: (index: number) => void;
   selectedCategory: number | null;
   headerAnimation: Animated.Value;
-}> = ({ onPressCategory, selectedCategory, headerAnimation }) => {
+}
+
+const CategoryList: React.FC<CategoryListProps> = ({ onPressCategory, selectedCategory, headerAnimation }) => {
   const category = ['휴식', '에너지 충전', '집중', '운동', '출퇴근/등하교'];
 
   return (
