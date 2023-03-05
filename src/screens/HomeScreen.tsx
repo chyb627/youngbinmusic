@@ -79,10 +79,13 @@ const HomeScreen = () => {
         onScrollBeginDrag={onScrollBeginDrag}
         onScrollEndDrag={onScrollEndDrag}>
         <View style={styles.musicListContainer}>
+          {/* 빠른선곡 */}
           <MusicListSmall />
 
+          {/* 다시듣기 */}
           <MusicListMedium />
 
+          {/* 최신음악 */}
           <MusicListLarge />
         </View>
       </ScrollView>

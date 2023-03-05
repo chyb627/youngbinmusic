@@ -1,23 +1,24 @@
-import { faker } from '@faker-js/faker';
 import React, { useRef } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { fastSelectSong } from '../../data/music';
+import { FastSelectSong } from '../../types/types';
 import { Icon } from '../ui/Icons';
-import { RemoteImage } from '../ui/RemoteImage';
+import { LocalImage } from '../ui/LocalImage';
 
 const { width } = Dimensions.get('window');
 
-const MusicListSmallItem = () => {
+const MusicListSmallItem: React.FC<{ item: FastSelectSong }> = ({ item }) => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftItemContainer}>
-        <RemoteImage url={`https://picsum.photos/5${Math.floor(Math.random() * 10)}`} height={50} width={50} />
+        <LocalImage localAsset={item.artwork} height={50} width={50} />
 
         <View style={styles.itemTextContainer}>
           <Text style={styles.itemTitleText} numberOfLines={1}>
-            {faker.music.songName()}
+            {item.title}
           </Text>
           <Text style={styles.itemSingerText} numberOfLines={1}>
-            {faker.music.genre()}
+            {item.artist}
           </Text>
         </View>
       </View>
@@ -91,11 +92,11 @@ const MusicListSmall = () => {
             });
           }
         }}>
-        {[...Array(3)].map((val, idx) => {
+        {fastSelectSong.map((val, idx) => {
           return (
             <View style={{ width: width * 0.9 }} key={`music-list-small-item-container-${idx}`}>
-              {[...Array(4)].map((_, i) => {
-                return <MusicListSmallItem key={`music-list-small-item-${i}`} />;
+              {val.map((v, i) => {
+                return <MusicListSmallItem key={`music-list-small-item-${i}`} item={v} />;
               })}
             </View>
           );
