@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
+import PlayList from '../components/common/PlayList';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
@@ -85,6 +86,8 @@ const HomeScreen = () => {
           <MusicListLarge />
         </View>
       </ScrollView>
+
+      <PlayList />
     </View>
   );
 };
