@@ -1,9 +1,54 @@
 import { faker } from '@faker-js/faker';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import TrackPlayer, { Capability, State, usePlaybackState } from 'react-native-track-player';
+import { songs } from '../../data/music';
 import { Icon } from '../ui/Icons';
 
 const PlayListMini = () => {
+  const playbackState = usePlaybackState();
+
+  const setupPlayer = async () => {
+    try {
+      await TrackPlayer.setupPlayer();
+
+      TrackPlayer.updateOptions({
+        // Media controls capabilities
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+          Capability.Stop,
+        ],
+
+        // Capabilities that will show up when the notification is in the compact form on Android
+        compactCapabilities: [Capability.Play, Capability.Pause],
+
+        // Icons for the notification on Android (if you don't like the default ones)
+      });
+    } catch (e) {}
+    await TrackPlayer.add(songs);
+  };
+
+  const togglePlayback = async (state: State) => {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+
+    if (currentTrack !== null) {
+      if (state === State.Paused || state === State.Ready) {
+        console.log('play');
+        await TrackPlayer.play();
+      } else {
+        console.log('pause');
+        await TrackPlayer.pause();
+      }
+    }
+  };
+
+  useEffect(() => {
+    setupPlayer();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>
@@ -16,9 +61,12 @@ const PlayListMini = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity
+          onPress={async () => {
+            togglePlayback(playbackState);
+          }}>
           <View style={styles.iconContainer}>
-            <Icon name="play" size={24} color="#fff" />
+            <Icon name={playbackState === State.Playing ? 'pause' : 'play'} size={24} color="#fff" />
           </View>
         </TouchableOpacity>
 
