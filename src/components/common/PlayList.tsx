@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Animated, Dimensions, PanResponder, StyleSheet } from 'react-native';
-import { RemoteImage } from '../ui/RemoteImage';
+import { LocalImage } from '../ui/LocalImage';
 // import PlayListFull from './PlayListFull';
 import PlayListMini from './PlayListMini';
 
@@ -102,7 +102,7 @@ const PlayList: React.FC<PlayListProps> = ({ playListAnimation }) => {
             }),
           },
         ]}>
-        <RemoteImage url="https://picsum.photos/50" style={styles.image} />
+        <LocalImage localAsset={require('../../assets/images/gone.png')} style={styles.image} />
       </Animated.View>
 
       <Animated.View

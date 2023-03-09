@@ -1,12 +1,13 @@
-import { faker } from '@faker-js/faker';
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrackPlayer, { Capability, State, usePlaybackState } from 'react-native-track-player';
 import { songs } from '../../data/music';
+import { useRootNavigation } from '../../navigation/RootNavigation';
 import { Icon } from '../ui/Icons';
 
 const PlayListMini = () => {
   const playbackState = usePlaybackState();
+  const navigation = useRootNavigation();
 
   const setupPlayer = async () => {
     try {
@@ -51,14 +52,18 @@ const PlayListMini = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textContainer}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('PlayList');
+        }}
+        style={styles.textContainer}>
         <Text style={styles.songNameText} numberOfLines={1}>
-          {faker.music.songName()}
+          GONE
         </Text>
         <Text style={styles.singerText} numberOfLines={1}>
-          {faker.music.genre()}
+          Leellamarz
         </Text>
-      </View>
+      </TouchableOpacity>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -101,6 +106,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginLeft: 10,
     flexShrink: 1,
+    flex: 1,
   },
   songNameText: {
     color: '#ddd',
