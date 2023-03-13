@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import React from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { Icon } from '../ui/Icons';
 import { RemoteImage } from '../ui/RemoteImage';
 
 const { width } = Dimensions.get('window');
@@ -28,10 +27,6 @@ const MusicListLarge = () => {
       {/* 타이틀 */}
       <View style={styles.titleContainer}>
         <View style={styles.leftContainer}>
-          <View style={styles.iconContainer}>
-            <Icon name="play-back-sharp" size={24} color="#999" />
-          </View>
-
           <Text style={styles.newMusicText}>최신음악</Text>
         </View>
 

@@ -1,6 +1,6 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
-import PlayList from '../components/common/PlayList';
+import PlayListMini from '../components/common/PlayListMini';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
@@ -23,7 +23,6 @@ const IconItem: React.FC<{ name: string }> = ({ name }) => {
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
-  const playListAnimation = useRef(new Animated.Value(0)).current;
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -91,7 +90,7 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      <PlayList playListAnimation={playListAnimation} />
+      <PlayListMini />
     </View>
   );
 };

@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrackPlayer, { Capability, State, usePlaybackState } from 'react-native-track-player';
 import { songs } from '../../data/music';
 import { useRootNavigation } from '../../navigation/RootNavigation';
 import { Icon } from '../ui/Icons';
+import { LocalImage } from '../ui/LocalImage';
+
+const { width } = Dimensions.get('window');
 
 const PlayListMini = () => {
   const playbackState = usePlaybackState();
@@ -52,34 +55,46 @@ const PlayListMini = () => {
 
   return (
     <View style={styles.container}>
+      {/* image */}
       <TouchableOpacity
+        style={styles.imageContainer}
         onPress={() => {
           navigation.navigate('PlayList');
-        }}
-        style={styles.textContainer}>
-        <Text style={styles.songNameText} numberOfLines={1}>
-          GONE
-        </Text>
-        <Text style={styles.singerText} numberOfLines={1}>
-          Leellamarz
-        </Text>
+        }}>
+        <LocalImage localAsset={require('../../assets/images/gone.png')} style={styles.image} />
       </TouchableOpacity>
 
-      <View style={styles.buttonContainer}>
+      {/* text, icon */}
+      <View style={styles.contentsContainer}>
         <TouchableOpacity
-          onPress={async () => {
-            togglePlayback(playbackState);
-          }}>
-          <View style={styles.iconContainer}>
-            <Icon name={playbackState === State.Playing ? 'pause' : 'play'} size={24} color="#fff" />
-          </View>
+          onPress={() => {
+            navigation.navigate('PlayList');
+          }}
+          style={styles.textContainer}>
+          <Text style={styles.songNameText} numberOfLines={1}>
+            GONE
+          </Text>
+          <Text style={styles.singerText} numberOfLines={1}>
+            Leellamarz
+          </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}}>
-          <View style={styles.iconContainer}>
-            <Icon name="play-skip-forward" size={24} color="#fff" />
-          </View>
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={async () => {
+              togglePlayback(playbackState);
+            }}>
+            <View style={styles.iconContainer}>
+              <Icon name={playbackState === State.Playing ? 'pause' : 'play'} size={24} color="#fff" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => {}}>
+            <View style={styles.iconContainer}>
+              <Icon name="play-skip-forward" size={24} color="#fff" />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -89,9 +104,28 @@ export default PlayListMini;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#222',
+    borderBottomColor: '#666',
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: 10,
+    height: width * 0.15,
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    height: 50,
+    width: 50,
+  },
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  contentsContainer: {
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flex: 1,
     alignItems: 'center',
   },
   buttonContainer: {
