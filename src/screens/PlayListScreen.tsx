@@ -6,11 +6,11 @@ import { LocalImage } from '../components/ui/LocalImage';
 import { Typography } from '../components/ui/Typography';
 import { useRootNavigation } from '../navigation/RootNavigation';
 
-const IconItem: React.FC<{ name: string }> = ({ name }) => {
+const IconItem: React.FC<{ name: string; size?: number }> = ({ name, size = 20 }) => {
   return (
     <TouchableOpacity>
       <View style={styles.headerIcon}>
-        <Icon name={name} color="#fff" size={20} />
+        <Icon name={name} color="#fff" size={size} />
       </View>
     </TouchableOpacity>
   );
@@ -53,13 +53,52 @@ const PlayListScreen = () => {
         </View>
       </View>
 
+      {/* Large Image */}
       <View style={styles.imageContainer}>
         <LocalImage localAsset={require('../assets/images/gone.png')} width={width * 0.8} height={width * 0.8} />
       </View>
 
-      <View style={styles.textContainer}>
-        <Text style={styles.titleText}>Gone</Text>
-        <Text style={styles.singerText}>Leellamarz 및 TOIL</Text>
+      {/* Contents */}
+      <View style={styles.contentsContainer}>
+        {/* Left Icon */}
+        <IconItem name="thumbs-down-outline" />
+
+        {/* 타이틀 및 제목 */}
+        <View style={styles.textContainer}>
+          <Text numberOfLines={1} style={styles.titleText}>
+            Gone
+          </Text>
+          <Text numberOfLines={1} style={styles.singerText}>
+            Leellamarz 및 TOIL
+          </Text>
+        </View>
+
+        {/* Right Icon */}
+        <IconItem name="thumbs-up-outline" />
+      </View>
+
+      {/* 타임라인 */}
+      <View style={styles.timeLineContainer}>
+        <View style={styles.timeLineBar} />
+        <View style={styles.timeLineCircle} />
+
+        <View style={styles.timeTextContainer}>
+          <Text style={styles.timeTextStart}>0:00</Text>
+          <Text style={styles.timeTextEnd}>3:45</Text>
+        </View>
+      </View>
+
+      {/* Middle Play Stop Button */}
+      <View style={styles.middleButtonContainer}>
+        <IconItem size={24} name="ios-shuffle" />
+        <IconItem size={24} name="play-skip-back-sharp" />
+
+        <View style={styles.playIconContainer}>
+          <IconItem size={28} name="play" />
+        </View>
+
+        <IconItem size={24} name="play-skip-forward-sharp" />
+        <IconItem size={24} name="repeat" />
       </View>
 
       {/* Bottom */}
@@ -124,8 +163,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textContainer: {
+  contentsContainer: {
     marginTop: width * 0.1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+  },
+  textContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -138,6 +184,45 @@ const styles = StyleSheet.create({
     marginTop: 4,
     color: '#fff',
     fontWeight: '200',
+  },
+  timeLineContainer: {
+    marginTop: width * 0.1,
+    paddingHorizontal: 30,
+  },
+  timeLineBar: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ffffff80',
+  },
+  timeLineCircle: {
+    width: 10,
+    height: 10,
+    backgroundColor: '#fff',
+    marginTop: -6,
+    borderRadius: 10,
+  },
+  timeTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
+  timeTextStart: {
+    color: '#fff',
+  },
+  timeTextEnd: {
+    color: '#fff',
+  },
+  middleButtonContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 50,
+  },
+  playIconContainer: {
+    backgroundColor: '#ffffff50',
+    paddingVertical: 12,
+    paddingHorizontal: 7,
+    borderRadius: 100,
   },
   BottomContainer: {
     position: 'absolute',
