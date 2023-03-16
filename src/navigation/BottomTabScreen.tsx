@@ -15,21 +15,21 @@ const BottomTabScreen = () => {
     <BottomTab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarIcon: ({ color }) => {
+        tabBarIcon: ({ color, focused }) => {
           const getIconName = (): TypeIconName => {
             if (route.name === 'Home') {
-              return 'home-outline';
+              return focused ? 'home' : 'home-outline';
             }
             if (route.name === 'LookAround') {
-              return 'compass-outline';
+              return focused ? 'compass' : 'compass-outline';
             }
-            return 'musical-notes-outline';
+            return focused ? 'musical-notes' : 'musical-notes-outline';
           };
           const routeIconName = getIconName();
           return <TabIcon iconName={routeIconName} iconColor={color} />;
         },
         tabBarStyle: { backgroundColor: '#000' },
-        tabBarActiveTintColor: 'yellow',
+        tabBarActiveTintColor: '#fff',
       })}>
       <BottomTab.Screen name="Home" component={HomeScreen} options={{ title: '홈' }} />
       <BottomTab.Screen name="LookAround" component={LookAroundScreen} options={{ title: '둘러보기' }} />
