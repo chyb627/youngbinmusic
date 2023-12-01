@@ -1,7 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import TrackPlayer, { Capability, State, usePlaybackState } from 'react-native-track-player';
-import { songs } from '../../data/music';
+import TrackPlayer, {
+  Event,
+  PlaybackState,
+  State,
+  Track,
+  usePlaybackState,
+  useTrackPlayerEvents,
+} from 'react-native-track-player';
 import { useRootNavigation } from '../../navigation/RootNavigation';
 import { Icon } from '../ui/Icons';
 import { LocalImage } from '../ui/LocalImage';
@@ -9,50 +15,43 @@ import { LocalImage } from '../ui/LocalImage';
 const { width } = Dimensions.get('window');
 
 const PlayListMini = () => {
-  const playbackState = usePlaybackState();
+  const [track, setTrack] = useState<Track | null>();
   const navigation = useRootNavigation();
+  console.log('track', track);
 
-  const setupPlayer = async () => {
-    try {
-      await TrackPlayer.setupPlayer();
+  useTrackPlayerEvents([Event.PlaybackTrackChanged], async (event) => {
+    console.log('event::', event);
+    switch (event.type) {
+      case Event.PlaybackTrackChanged:
+        const playingTrack = await TrackPlayer.getTrack(event.nextTrack);
+        setTrack(playingTrack);
+        break;
+    }
+  });
 
-      TrackPlayer.updateOptions({
-        // Media controls capabilities
-        capabilities: [
-          Capability.Play,
-          Capability.Pause,
-          Capability.SkipToNext,
-          Capability.SkipToPrevious,
-          Capability.Stop,
-        ],
+  const playBackState = usePlaybackState();
 
-        // Capabilities that will show up when the notification is in the compact form on Android
-        compactCapabilities: [Capability.Play, Capability.Pause],
-
-        // Icons for the notification on Android (if you don't like the default ones)
-      });
-    } catch (e) {}
-    await TrackPlayer.add(songs);
+  // Next Button
+  const skipToNext = async () => {
+    await TrackPlayer.skipToNext();
   };
 
-  const togglePlayback = async (state: State) => {
+  // Previous Button
+  const skipToPrevious = async () => {
+    await TrackPlayer.skipToPrevious();
+  };
+
+  const togglePlayback = async (playback: PlaybackState | { state?: undefined }) => {
     const currentTrack = await TrackPlayer.getCurrentTrack();
 
     if (currentTrack !== null) {
-      if (state === State.Paused || state === State.Ready) {
-        console.log('play');
+      if (!playback.state || playback.state === State.Paused || playback.state === State.Ready) {
         await TrackPlayer.play();
       } else {
-        console.log('pause');
         await TrackPlayer.pause();
       }
     }
   };
-
-  useEffect(() => {
-    setupPlayer();
-  }, []);
-
   return (
     <View style={styles.container}>
       {/* image */}
@@ -80,16 +79,22 @@ const PlayListMini = () => {
         </TouchableOpacity>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={async () => {
-              togglePlayback(playbackState);
-            }}>
+          <TouchableOpacity onPress={skipToPrevious}>
             <View style={styles.iconContainer}>
-              <Icon name={playbackState === State.Playing ? 'pause' : 'play'} size={24} color="#fff" />
+              <Icon name="play-skip-back" size={24} color="#fff" />
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity
+            onPress={async () => {
+              togglePlayback(playBackState);
+            }}>
+            <View style={styles.iconContainer}>
+              <Icon name={playBackState.state === State.Playing ? 'pause' : 'play'} size={24} color="#fff" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={skipToNext}>
             <View style={styles.iconContainer}>
               <Icon name="play-skip-forward" size={24} color="#fff" />
             </View>

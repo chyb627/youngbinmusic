@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
 import PlayListMini from '../components/common/PlayListMini';
 import CategoryList from '../components/Home/CategoryList';
@@ -9,6 +9,7 @@ import MusicListSmall from '../components/Home/MusicListSmall';
 import { Header } from '../components/ui/Header/Header';
 import { Icon } from '../components/ui/Icons';
 import useHome from '../hooks/useHome';
+import { addTrack, setupPlayer } from '../util/playerservice';
 
 const IconItem: React.FC<{ name: string }> = ({ name }) => {
   return (
@@ -31,6 +32,23 @@ const HomeScreen = () => {
     },
     [selectedCategory],
   );
+
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+  console.log('isPlayerReady:', isPlayerReady);
+
+  const setup = async () => {
+    let isSetup = await setupPlayer();
+
+    if (isSetup) {
+      await addTrack();
+    }
+
+    setIsPlayerReady(isSetup);
+  };
+
+  useEffect(() => {
+    setup();
+  }, []);
 
   return (
     <View style={styles.container}>

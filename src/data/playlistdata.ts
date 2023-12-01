@@ -1,6 +1,6 @@
-import { FastSelectSong } from '../types/types';
+import { Track } from 'react-native-track-player';
 
-export const fastSelectSong: FastSelectSong[][] = [
+export const fastSelectSong: Track[][] = [
   [
     {
       title: 'GONE',
@@ -81,17 +81,33 @@ export const fastSelectSong: FastSelectSong[][] = [
   ],
 ];
 
-export const songs = [
+export const playListData: Track[] = [
   {
+    id: 1,
     title: 'gone',
     artist: 'Leellamarz',
     artwork: require('../assets/images/turtle.png'),
     url: require('../assets/mp3/gone.mp3'),
   },
   {
+    id: 2,
     title: 'gone',
     artist: 'Leellamarz',
     artwork: require('../assets/images/turtle.png'),
     url: require('../assets/mp3/gone.mp3'),
+  },
+  {
+    id: 2,
+    title: 'gone',
+    artist: 'Leellamarz',
+    artwork: require('../assets/images/turtle.png'),
+    url: require('../assets/mp3/gone.mp3'),
+  },
+  {
+    id: 3,
+    title: 'title 3',
+    artist: 'artist 3',
+    artwork: require('../assets/images/turtle.png'),
+    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
   },
 ];

@@ -1,13 +1,13 @@
 import React, { useRef } from 'react';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { fastSelectSong } from '../../data/music';
-import { FastSelectSong } from '../../types/types';
+import { fastSelectSong } from '../../data/playlistdata';
 import { Icon } from '../ui/Icons';
 import { LocalImage } from '../ui/LocalImage';
+import { Track } from 'react-native-track-player';
 
 const { width } = Dimensions.get('window');
 
-const MusicListSmallItem: React.FC<{ item: FastSelectSong }> = ({ item }) => {
+const MusicListSmallItem: React.FC<{ item: Track }> = ({ item }) => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftItemContainer}>

@@ -11,11 +11,3 @@ export type BottomTabsParamList = {
   LookAround: undefined;
   Storage: undefined;
 };
-
-//data
-export type FastSelectSong = {
-  title: string;
-  artist: string;
-  artwork: number;
-  url: number;
-};
