@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import TrackPlayer, {
   Event,
   PlaybackState,
@@ -8,19 +8,16 @@ import TrackPlayer, {
   usePlaybackState,
   useTrackPlayerEvents,
 } from 'react-native-track-player';
-import { useRootNavigation } from '../../navigation/RootNavigation';
 import { Icon } from '../ui/Icons';
-import { LocalImage } from '../ui/LocalImage';
 
 const { width } = Dimensions.get('window');
 
 const PlayListMini = () => {
   const [track, setTrack] = useState<Track | null>();
-  const navigation = useRootNavigation();
   console.log('track', track);
 
   useTrackPlayerEvents([Event.PlaybackTrackChanged], async (event) => {
-    console.log('event::', event);
+    // console.log('event::', event);
     switch (event.type) {
       case Event.PlaybackTrackChanged:
         const playingTrack = await TrackPlayer.getTrack(event.nextTrack);
@@ -55,21 +52,13 @@ const PlayListMini = () => {
   return (
     <View style={styles.container}>
       {/* image */}
-      <TouchableOpacity
-        style={styles.imageContainer}
-        onPress={() => {
-          navigation.navigate('PlayList');
-        }}>
-        <LocalImage localAsset={require('../../assets/images/gone.png')} style={styles.image} />
+      <TouchableOpacity style={styles.imageContainer}>
+        <Image source={require('../../assets/images/gone.png')} style={styles.image} />
       </TouchableOpacity>
 
       {/* text, icon */}
       <View style={styles.contentsContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('PlayList');
-          }}
-          style={styles.textContainer}>
+        <TouchableOpacity style={styles.textContainer}>
           <Text style={styles.songNameText} numberOfLines={1}>
             GONE
           </Text>

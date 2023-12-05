@@ -1,6 +1,13 @@
 import { Track } from 'react-native-track-player';
 
-export const fastSelectSong: Track[][] = [
+export type FastSelectSongProps = {
+  title: string;
+  artist: string;
+  artwork: number;
+  url: number;
+};
+
+export const fastSelectSong: FastSelectSongProps[][] = [
   [
     {
       title: 'GONE',

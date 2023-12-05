@@ -1,12 +1,23 @@
 import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
+import BottomTab from '../components/Home/BottomTab';
 
 const StorageScreen = () => {
   return (
-    <SafeAreaView>
+    <View style={styles.container}>
       <Text>Storage</Text>
-    </SafeAreaView>
+
+      {/* 바텀탭 */}
+      <BottomTab />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#111',
+  },
+});
 
 export default StorageScreen;

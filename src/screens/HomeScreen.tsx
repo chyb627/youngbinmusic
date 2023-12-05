@@ -1,25 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet, Image, TouchableOpacity, Animated } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import PlayListMini from '../components/common/PlayListMini';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
 import MusicListMedium from '../components/Home/MusicListMedium';
 import MusicListSmall from '../components/Home/MusicListSmall';
-import { Header } from '../components/ui/Header/Header';
-import { Icon } from '../components/ui/Icons';
 import useHome from '../hooks/useHome';
 import { addTrack, setupPlayer } from '../util/playerservice';
-
-const IconItem: React.FC<{ name: string }> = ({ name }) => {
-  return (
-    <TouchableOpacity>
-      <View style={styles.headerIcon}>
-        <Icon name={name} color="#fff" size={20} />
-      </View>
-    </TouchableOpacity>
-  );
-};
+import BottomTab from '../components/Home/BottomTab';
+import LogoHeader from '../components/common/LogoHeader';
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
@@ -52,36 +42,9 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderBackground selectedCategory={selectedCategory} headerBackgroundAnimation={headerBackgroundAnimation} />
-
       {/* 헤더 */}
-      <Animated.View
-        style={{
-          marginTop: headerAnimation.interpolate({
-            inputRange: [-40, 0, 100],
-            outputRange: [0, 0, -45],
-          }),
-          opacity: headerAnimation.interpolate({
-            inputRange: [-40, 0, 20],
-            outputRange: [1, 1, 0],
-          }),
-        }}>
-        <Header>
-          <Image style={styles.headerImage} source={require('../assets/images/logo.png')} />
-          <View style={styles.headerIconContainer}>
-            <IconItem name="logo-rss" />
-            <IconItem name="search" />
-
-            <TouchableOpacity>
-              <View style={styles.headerIcon}>
-                <View style={styles.userIcon}>
-                  <Icon name="person-outline" color="#fff" size={20} />
-                </View>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </Header>
-      </Animated.View>
+      <HeaderBackground selectedCategory={selectedCategory} headerBackgroundAnimation={headerBackgroundAnimation} />
+      <LogoHeader />
 
       {/* 카테고리 리스트 */}
       <CategoryList
@@ -90,7 +53,6 @@ const HomeScreen = () => {
         headerAnimation={headerAnimation}
       />
 
-      {/* 뮤직 리스트 */}
       <ScrollView
         scrollEventThrottle={1} // 스크롤 민감도, 얼마나 민감하게 스크롤을 캐치할 것인지 설정. (1~16)
         onScroll={onScroll}
@@ -108,7 +70,11 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
+      {/* 미니 플레이리스트 */}
       <PlayListMini />
+
+      {/* 바텀탭 */}
+      <BottomTab />
     </View>
   );
 };
@@ -119,27 +85,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#111',
-  },
-  headerImage: {
-    height: 30,
-    width: 90,
-  },
-  headerIconContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerIcon: {
-    marginHorizontal: 8,
-  },
-  userIcon: {
-    height: 30,
-    width: 30,
-    backgroundColor: '#555',
-    borderRadius: 30 / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
   },
   musicListContainer: {
     marginBottom: 100,

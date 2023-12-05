@@ -1,17 +1,15 @@
 import React, { useRef } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { fastSelectSong } from '../../data/playlistdata';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FastSelectSongProps, fastSelectSong } from '../../data/playlistdata';
 import { Icon } from '../ui/Icons';
-import { LocalImage } from '../ui/LocalImage';
-import { Track } from 'react-native-track-player';
 
 const { width } = Dimensions.get('window');
 
-const MusicListSmallItem: React.FC<{ item: Track }> = ({ item }) => {
+const MusicListSmallItem: React.FC<{ item: FastSelectSongProps }> = ({ item }) => {
   return (
     <View style={styles.itemContainer}>
       <View style={styles.leftItemContainer}>
-        <LocalImage localAsset={item.artwork} height={50} width={50} />
+        <Image source={item.artwork} style={styles.image} />
 
         <View style={styles.itemTextContainer}>
           <Text style={styles.itemTitleText} numberOfLines={1}>
@@ -151,5 +149,9 @@ const styles = StyleSheet.create({
   itemIconContainer: {
     padding: 10,
     flexShrink: 1,
+  },
+  image: {
+    height: 50,
+    width: 50,
   },
 });
