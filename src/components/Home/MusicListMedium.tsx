@@ -6,26 +6,6 @@ import { RemoteImage } from '../ui/RemoteImage';
 
 const { width } = Dimensions.get('window');
 
-const MusicListMediumItem = () => {
-  return (
-    <View>
-      <RemoteImage
-        url={`https://picsum.photos/20${Math.floor(Math.random() * 10)}`}
-        height={width / 4}
-        width={width / 4}
-      />
-
-      <View style={styles.itemIconContainer}>
-        <Icon name="play" size={28} color="#fff" />
-      </View>
-
-      <Text style={styles.itemText} numberOfLines={1}>
-        {faker.music.songName()}
-      </Text>
-    </View>
-  );
-};
-
 const MusicListMedium = () => {
   return (
     <View style={styles.container}>
@@ -56,7 +36,25 @@ const MusicListMedium = () => {
   );
 };
 
-export default MusicListMedium;
+const MusicListMediumItem = () => {
+  return (
+    <View>
+      <RemoteImage
+        url={`https://picsum.photos/20${Math.floor(Math.random() * 10)}`}
+        height={width / 4}
+        width={width / 4}
+      />
+
+      <View style={styles.itemIconContainer}>
+        <Icon name="play" size={28} color="#fff" />
+      </View>
+
+      <Text style={styles.itemText} numberOfLines={1}>
+        {faker.music.songName()}
+      </Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -106,3 +104,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
+
+export default MusicListMedium;

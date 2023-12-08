@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import BottomTab from '../components/Home/BottomTab';
+import { StyleSheet, Text, SafeAreaView } from 'react-native';
+import BottomTab from '../components/common/BottomTab';
 
 const StorageScreen = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>Storage</Text>
 
       {/* 바텀탭 */}
       <BottomTab />
-    </View>
+    </SafeAreaView>
   );
 };
 

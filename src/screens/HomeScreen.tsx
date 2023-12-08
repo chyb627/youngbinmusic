@@ -6,14 +6,14 @@ import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
 import MusicListMedium from '../components/Home/MusicListMedium';
 import MusicListSmall from '../components/Home/MusicListSmall';
-import useHome from '../hooks/useHome';
+import useHomeScroll from '../hooks/useHomeScroll';
 import { addTrack, setupPlayer } from '../util/playerservice';
-import BottomTab from '../components/Home/BottomTab';
+import BottomTab from '../components/common/BottomTab';
 import LogoHeader from '../components/common/LogoHeader';
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHome();
+  const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHomeScroll();
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -42,9 +42,9 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      {/* 헤더 */}
+      {/* 로고 헤더 */}
       <HeaderBackground selectedCategory={selectedCategory} headerBackgroundAnimation={headerBackgroundAnimation} />
-      <LogoHeader />
+      <LogoHeader headerAnimation={headerAnimation} />
 
       {/* 카테고리 리스트 */}
       <CategoryList

@@ -41,6 +41,7 @@ const MusicListSmall = () => {
         <Text style={styles.titleTextBottom}>빠른 선곡</Text>
       </View>
 
+      {/* 4x3 뮤직 리스트 */}
       <ScrollView
         horizontal
         ref={scrollRef}
