@@ -4,7 +4,6 @@ import { playListData } from '../data/playlistdata';
 
 export const setupPlayer = async () => {
   let isSetup = false;
-
   try {
     await TrackPlayer.getCurrentTrack();
     isSetup = true;

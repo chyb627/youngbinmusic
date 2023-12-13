@@ -1,15 +1,32 @@
 import React, { useRef } from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { FastSelectSongProps, fastSelectSong } from '../../data/playlistdata';
+import {
+  Dimensions,
+  Image,
+  ImageSourcePropType,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { playListData } from '../../data/playlistdata';
 import { Icon } from '../ui/Icons';
+import usePlayer from '../../hooks/usePlayer';
+import { Track } from 'react-native-track-player';
 
 const { width } = Dimensions.get('window');
 
-const MusicListSmallItem: React.FC<{ item: FastSelectSongProps }> = ({ item }) => {
+const MusicListSmallItem: React.FC<{ item: Track }> = ({ item }) => {
+  const { onPressAddTrack } = usePlayer();
+
   return (
-    <View style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => {
+        onPressAddTrack(item);
+      }}>
       <View style={styles.leftItemContainer}>
-        <Image source={item.artwork} style={styles.image} />
+        <Image source={item.artwork as ImageSourcePropType} style={styles.image} />
 
         <View style={styles.itemTextContainer}>
           <Text style={styles.itemTitleText} numberOfLines={1}>
@@ -24,7 +41,7 @@ const MusicListSmallItem: React.FC<{ item: FastSelectSongProps }> = ({ item }) =
       <View style={styles.itemIconContainer}>
         <Icon name="ellipsis-vertical-sharp" color="#fff" size={12} />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -32,6 +49,7 @@ const MusicListSmall = () => {
   const scrollRef = useRef<ScrollView>(null);
   const scrollStartRef = useRef(0);
   const pageRef = useRef(1);
+  const numberOfColumns = 4; // 원하는 열의 수
 
   return (
     <View>
@@ -91,15 +109,20 @@ const MusicListSmall = () => {
             });
           }
         }}>
-        {fastSelectSong.map((val, idx) => {
-          return (
-            <View style={{ width: width * 0.9 }} key={`music-list-small-item-container-${idx}`}>
-              {val.map((v, i) => {
-                return <MusicListSmallItem key={`music-list-small-item-${i}`} item={v} />;
-              })}
-            </View>
-          );
-        })}
+        {/**
+         * numberOfColumns 변수로 행에 표시할 아이템 수를 정의함.
+         * Array.from 메서드를 사용하여 행 수를 계산한다.
+         * Math.ceil(playListData.length / numberOfColumns)으로 전체 아이템을 numberOfColumns로 나누고 올림하여 행 수를 계산한다.
+         * idx * numberOfColumns 는 현재 행의 시작 인덱스
+         * (idx + 1) * numberOfColumns 는 형재 행의 끝 인덱스
+         **/}
+        {Array.from({ length: Math.ceil(playListData.length / numberOfColumns) }).map((_, idx) => (
+          <View style={{ width: width * 0.9 }} key={`music-list-small-item-container-${idx}`}>
+            {playListData.slice(idx * numberOfColumns, (idx + 1) * numberOfColumns).map((v, i) => (
+              <MusicListSmallItem key={`music-list-item-${idx}-${i}`} item={v} />
+            ))}
+          </View>
+        ))}
       </ScrollView>
     </View>
   );

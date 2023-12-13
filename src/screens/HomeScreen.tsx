@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
-import PlayListMini from '../components/common/PlayListMini';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { View, ScrollView, StyleSheet, Animated } from 'react-native';
 import CategoryList from '../components/Home/CategoryList';
 import HeaderBackground from '../components/Home/HeaderBackground';
 import MusicListLarge from '../components/Home/MusicListLarge';
@@ -10,10 +9,12 @@ import useHomeScroll from '../hooks/useHomeScroll';
 import { addTrack, setupPlayer } from '../util/playerservice';
 import BottomTab from '../components/common/BottomTab';
 import LogoHeader from '../components/common/LogoHeader';
+import PlayList from '../components/common/PlayList';
 
 const HomeScreen = () => {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const { headerAnimation, headerBackgroundAnimation, onScroll, onScrollBeginDrag, onScrollEndDrag } = useHomeScroll();
+  const playlistAnimation = useRef(new Animated.Value(0)).current;
 
   const onPressCategory = useCallback(
     (index: number) => {
@@ -28,11 +29,9 @@ const HomeScreen = () => {
 
   const setup = async () => {
     let isSetup = await setupPlayer();
-
     if (isSetup) {
       await addTrack();
     }
-
     setIsPlayerReady(isSetup);
   };
 
@@ -70,16 +69,14 @@ const HomeScreen = () => {
         </View>
       </ScrollView>
 
-      {/* 미니 플레이리스트 */}
-      <PlayListMini />
+      {/* 플레이리스트 */}
+      <PlayList playlistAnimation={playlistAnimation} />
 
       {/* 바텀탭 */}
-      <BottomTab />
+      <BottomTab playlistAnimation={playlistAnimation} />
     </View>
   );
 };
-
-export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,3 +87,5 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
 });
+
+export default HomeScreen;
