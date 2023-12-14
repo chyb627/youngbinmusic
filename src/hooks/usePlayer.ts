@@ -50,6 +50,8 @@ const usePlayer = () => {
   // 음원 담기
   const onPressAddTrack = async (item: Track) => {
     console.log('onPressAddTrack', item);
+    await TrackPlayer.skip(item.id - 1);
+    await TrackPlayer.play();
   };
 
   return { track, playBackState, skipToNext, skipToPrevious, togglePlayback, onPressAddTrack };
